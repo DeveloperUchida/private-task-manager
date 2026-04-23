@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <?= $page_title ?> - TaskManager
+    </title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/admin_layout.css">
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">TaskManager <span class="admin-badge">Admin</span></div>
+            <nav class="sidebar-nav">
+                <a href="/admin.php" class="nav-item active">
+                    <span class="nav-icon">👥</span>ユーザー一覧
+                </a>
+                <a href="/admin_add_user.php" class="nav-item">
+                    <span class="nav-icon">➕</span>ユーザー登録
+                </a>
+                <a href="/admin_reset_password.php" class="nav-item">
+                    <span class="nav-icon">🔑</span>パスワードリセット
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/tasks.php" class="nav-item"><span class="nav-icon">←</span>タスク画面へ</a>
+                <a href="/admin_logout.php" class="nav-item logout"><span class="nav-icon">🚪</span>ログアウト</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="content-header">
+                <a href="/admin.php" class="btn-back-link">← ユーザー一覧に戻る</a>
+                <h1 class="page-title">
+                    <?= htmlspecialchars($targetUser['username'] ?? $targetUser['email'] ?? 'ユーザー詳細') ?>
+                </h1>
+            </div>
+
+            <!-- 基本情報 -->
+            <div class="card">
+                <h2 class="card-title">基本情報</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">ID</span>
+                        <span class="info-value mono">
+                            <?= $targetUser['id'] ?>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">ユーザー名</span>
+                        <span class="info-value">
+                            <?= htmlspecialchars($targetUser['username'] ?? '-') ?>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">メールアドレス</span>
+                        <span class="info-value">
+                            <?= htmlspecialchars($targetUser['email'] ?? '-') ?>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">権限</span>
+                        <span class="info-value">
+                            <?php if ($targetUser['is_admin']): ?>
+                            <span class="badge admin">管理者</span>
+                            <?php else: ?>
+                            <span class="badge user">一般ユーザー</span>
+                            <?php endif; ?>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">登録日時</span>
+                        <span class="info-value mono">
+                            <?= date('Y/m/d H:i', strtotime($targetUser['created_at'])) ?>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 連携情報 -->
+            <div class="card">
+                <h2 class="card-title">ログイン連携</h2>
+                <div class="auth-list">
+                    <div class="auth-item <?= $targetUser['username'] ? 'connected' : 'disconnected' ?>">
+                        <div class="auth-icon">🔐</div>
+                        <div class="auth-info">
+                            <div class="auth-name">パスワード認証</div>
+                            <div class="auth-status">
+                                <?= $targetUser['username'] ? '連携済み（ユーザー名: ' . htmlspecialchars($targetUser['username']) . '）' : '未設定' ?>
+                            </div>
+                        </div>
+                        <span class="auth-badge <?= $targetUser['username'] ? 'on' : 'off' ?>">
+                            <?= $targetUser['username'] ? '有効' : '無効' ?>
+                        </span>
+                    </div>
+                    <div class="auth-item <?= $targetUser['google_id'] ? 'connected' : 'disconnected' ?>">
+                        <div class="auth-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24">
+                                <path fill="#4285F4"
+                                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                                <path fill="#34A853"
+                                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                                <path fill="#FBBC05"
+                                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+                                <path fill="#EA4335"
+                                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                            </svg>
+                        </div>
+                        <div class="auth-info">
+                            <div class="auth-name">Google連携</div>
+                            <div class="auth-status">
+                                <?= $targetUser['google_id'] ? '連携済み（' . htmlspecialchars($targetUser['email'] ?? '') . '）' : '未連携' ?>
+                            </div>
+                        </div>
+                        <span class="auth-badge <?= $targetUser['google_id'] ? 'on' : 'off' ?>">
+                            <?= $targetUser['google_id'] ? '有効' : '無効' ?>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タスク統計 -->
+            <div class="card">
+                <h2 class="card-title">タスク統計</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <?= $totalTasks ?>
+                        </div>
+                        <div class="stat-label">合計</div>
+                    </div>
+                    <div class="stat-item todo">
+                        <div class="stat-value">
+                            <?= $stats['todo'] ?>
+                        </div>
+                        <div class="stat-label">Todo</div>
+                    </div>
+                    <div class="stat-item progress">
+                        <div class="stat-value">
+                            <?= $stats['in_progress'] ?>
+                        </div>
+                        <div class="stat-label">進行中</div>
+                    </div>
+                    <div class="stat-item done">
+                        <div class="stat-value">
+                            <?= $stats['done'] ?>
+                        </div>
+                        <div class="stat-label">完了</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最近のタスク -->
+            <?php if (!empty($recentTasks)): ?>
+            <div class="card">
+                <h2 class="card-title">最近のタスク</h2>
+                <div class="task-list">
+                    <?php foreach ($recentTasks as $task): ?>
+                    <div class="task-item">
+                        <span class="task-status-dot <?= $task['status'] ?>"></span>
+                        <span class="task-title-text">
+                            <?= htmlspecialchars($task['title']) ?>
+                        </span>
+                        <span class="task-date mono">
+                            <?= date('Y/m/d', strtotime($task['created_at'])) ?>
+                        </span>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+        </main>
+    </div>
+</body>
+
+</html>
