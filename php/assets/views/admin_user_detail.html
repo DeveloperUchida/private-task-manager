@@ -38,9 +38,12 @@
         <main class="content">
             <div class="content-header">
                 <a href="/admin.php" class="btn-back-link">← ユーザー一覧に戻る</a>
-                <h1 class="page-title">
-                    <?= htmlspecialchars($targetUser['username'] ?? $targetUser['email'] ?? 'ユーザー詳細') ?>
-                </h1>
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <h1 class="page-title">
+                        <?= htmlspecialchars($targetUser['username'] ?? $targetUser['email'] ?? 'ユーザー詳細') ?>
+                    </h1>
+                    <a href="/admin_edit_user.php?id=<?= $targetUser['id'] ?>" class="btn-detail">✏️ 編集</a>
+                </div>
             </div>
 
             <!-- 基本情報 -->

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <?= $page_title ?> - TaskManager
+    </title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/admin_layout.css">
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">TaskManager <span class="admin-badge">Admin</span></div>
+            <nav class="sidebar-nav">
+                <a href="/admin.php" class="nav-item active">
+                    <span class="nav-icon">👥</span>ユーザー一覧
+                </a>
+                <a href="/admin_add_user.php" class="nav-item">
+                    <span class="nav-icon">➕</span>ユーザー登録
+                </a>
+                <a href="/admin_reset_password.php" class="nav-item">
+                    <span class="nav-icon">🔑</span>パスワードリセット
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/tasks.php" class="nav-item"><span class="nav-icon">←</span>タスク画面へ</a>
+                <a href="/admin_logout.php" class="nav-item logout"><span class="nav-icon">🚪</span>ログアウト</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="content-header">
+                <a href="/admin_user_detail.php?id=<?= $targetUser['id'] ?>" class="btn-back-link">← ユーザー詳細に戻る</a>
+                <h1 class="page-title">
+                    <?= htmlspecialchars($targetUser['username'] ?? 'ユーザー編集') ?> の編集
+                </h1>
+            </div>
+
+            <?php if ($success): ?>
+            <div class="alert success">
+                <?= htmlspecialchars($success) ?>
+            </div>
+            <?php endif; ?>
+            <?php if ($error): ?>
+            <div class="alert error">
+                <?= htmlspecialchars($error) ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="card">
+                <h2 class="card-title">基本情報の編集</h2>
+                <form method="POST" action="/admin_edit_user.php?id=<?= $targetUser['id'] ?>">
+                    <input type="hidden" name="action" value="update">
+                    <div class="form-group">
+                        <label>ユーザー名</label>
+                        <input type="text" name="username"
+                            value="<?= htmlspecialchars($targetUser['username'] ?? '') ?>" placeholder="username"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>メールアドレス</label>
+                        <input type="text" name="email" value="<?= htmlspecialchars($targetUser['email'] ?? '') ?>"
+                            placeholder="example@email.com">
+                    </div>
+                    <?php if ($targetUser['id'] != $_SESSION['user_id']): ?>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="is_admin" <?=$targetUser['is_admin'] ? 'checked' : '' ?>>
+                            管理者権限を付与する
+                        </label>
+                    </div>
+                    <?php else: ?>
+                    <div class="form-group">
+                        <label>権限</label>
+                        <div style="font-size:14px;color:#999;margin-top:4px;">自分自身の権限は変更できません</div>
+                    </div>
+                    <?php endif; ?>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">更新する</button>
+                        <a href="/admin_user_detail.php?id=<?= $targetUser['id'] ?>" class="btn-cancel">キャンセル</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 認証管理カード -->
+            <div class="card">
+                <h2 class="card-title">認証管理</h2>
+
+                <!-- パスワード認証 -->
+                <div class="auth-item <?= $targetUser['username'] ? 'connected' : 'disconnected' ?>"
+                    style="margin-bottom:12px;">
+                    <div class="auth-icon">🔐</div>
+                    <div class="auth-info">
+                        <div class="auth-name">パスワード認証</div>
+                        <div class="auth-status">
+                            <?= $targetUser['username'] ? '連携済み（ユーザー名: ' . htmlspecialchars($targetUser['username']) . '）' : '未設定' ?>
+                        </div>
+                    </div>
+                    <span class="auth-badge <?= $targetUser['username'] ? 'on' : 'off' ?>">
+                        <?= $targetUser['username'] ? '有効' : '無効' ?>
+                    </span>
+                </div>
+
+                <?php if ($targetUser['username']): ?>
+                <?php if ($targetUser['google_id']): ?>
+                <form method="POST" action="/admin_edit_user.php?id=<?= $targetUser['id'] ?>"
+                    onsubmit="return confirm('パスワード認証を解除しますか？')" style="margin-bottom:20px;">
+                    <input type="hidden" name="action" value="unlink_password">
+                    <button class="btn-unlink">🔓 パスワード認証を解除</button>
+                </form>
+                <?php else: ?>
+                <p style="font-size:12px;color:#999;margin-bottom:20px;">※ Google連携がない場合はパスワード認証を解除できません</p>
+                <?php endif; ?>
+                <?php else: ?>
+                <form method="POST" action="/admin_edit_user.php?id=<?= $targetUser['id'] ?>"
+                    style="margin-bottom:20px;">
+                    <input type="hidden" name="action" value="set_password">
+                    <div class="form-group">
+                        <label>ユーザー名</label>
+                        <input type="text" name="new_username" placeholder="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>パスワード（8文字以上）</label>
+                        <input type="password" name="new_password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-submit">🔐 パスワード認証を設定</button>
+                </form>
+                <?php endif; ?>
+
+                <hr style="border:none;border-top:1px solid #f0f0ee;margin:8px 0 20px;">
+
+                <!-- Google連携 -->
+                <div class="auth-item <?= $targetUser['google_id'] ? 'connected' : 'disconnected' ?>"
+                    style="margin-bottom:12px;">
+                    <div class="auth-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24">
+                            <path fill="#4285F4"
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                            <path fill="#34A853"
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                            <path fill="#FBBC05"
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+                            <path fill="#EA4335"
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                        </svg>
+                    </div>
+                    <div class="auth-info">
+                        <div class="auth-name">Google連携</div>
+                        <div class="auth-status">
+                            <?= $targetUser['google_id'] ? '連携済み（' . htmlspecialchars($targetUser['email'] ?? '') . '）' : '未連携' ?>
+                        </div>
+                    </div>
+                    <span class="auth-badge <?= $targetUser['google_id'] ? 'on' : 'off' ?>">
+                        <?= $targetUser['google_id'] ? '有効' : '無効' ?>
+                    </span>
+                </div>
+
+                <?php if ($targetUser['google_id']): ?>
+                <?php if ($targetUser['username']): ?>
+                <form method="POST" action="/admin_edit_user.php?id=<?= $targetUser['id'] ?>"
+                    onsubmit="return confirm('Google連携を解除しますか？')">
+                    <input type="hidden" name="action" value="unlink_google">
+                    <button class="btn-unlink">🔓 Google連携を解除</button>
+                </form>
+                <?php else: ?>
+                <p style="font-size:12px;color:#999;">※ パスワード認証がない場合はGoogle連携を解除できません</p>
+                <?php endif; ?>
+                <?php else: ?>
+                <p style="font-size:12px;color:#999;">Google連携はユーザー本人がログインすることで自動設定されます</p>
+                <?php endif; ?>
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>
