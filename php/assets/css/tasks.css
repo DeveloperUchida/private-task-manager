@@ -1,0 +1,231 @@
+header {
+    background: #fff;
+    border-bottom: 1px solid #ebebeb;
+    padding: 0 32px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: #999;
+    text-transform: uppercase;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    color: #666;
+}
+
+.btn-logout {
+    font-size: 12px;
+    color: #999;
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    transition: all 0.15s;
+}
+
+.btn-logout:hover {
+    border-color: #bbb;
+    color: #333;
+}
+
+.main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+.add-form {
+    background: #fff;
+    border: 1px solid #ebebeb;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+.add-form h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+input[type="text"],
+textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #111;
+    background: #fafafa;
+    border: 1.5px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+input[type="text"] {
+    flex: 1;
+    height: 40px;
+}
+
+textarea {
+    flex: 2;
+    height: 40px;
+    resize: none;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #111;
+    background: #fff;
+}
+
+.btn-add {
+    height: 40px;
+    padding: 0 20px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+}
+
+.btn-add:hover {
+    background: #333;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.column {
+    background: #fff;
+    border: 1px solid #ebebeb;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.column-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.column-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #444;
+}
+
+.column-count {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    background: #f0f0ee;
+    color: #888;
+    padding: 2px 7px;
+    border-radius: 20px;
+}
+
+.task-card {
+    background: #fafafa;
+    border: 1px solid #ebebeb;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 10px;
+}
+
+.task-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111;
+    margin-bottom: 4px;
+}
+
+.task-desc {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.task-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.btn-status {
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.btn-status:hover {
+    border-color: #111;
+    color: #111;
+}
+
+.btn-delete {
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #fecaca;
+    background: #fff;
+    color: #dc2626;
+    cursor: pointer;
+    margin-left: auto;
+    transition: all 0.15s;
+}
+
+.btn-delete:hover {
+    background: #fff5f5;
+}
+
+.empty {
+    font-size: 13px;
+    color: #ccc;
+    text-align: center;
+    padding: 24px 0;
+}
+
+.col-progress .column-count {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.col-done .column-count {
+    background: #d1fae5;
+    color: #065f46;
+}

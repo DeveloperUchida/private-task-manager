@@ -101,7 +101,7 @@ func handleGoogleCallback(w http.ResponseWriter, r *http.Request) {
 	userSession.Values["email"] = googleUser.Email
 	userSession.Values["auth_type"] = "google"
 	userSession.Save(r, w)
-	http.Redirect(w, r, "/app/tasks", http.StatusSeeOther)
+	http.Redirect(w, r, "/app/tasks.php", http.StatusSeeOther)
 }
 
 func handleLogout(w http.ResponseWriter, r *http.Request) {
