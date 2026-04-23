@@ -1,0 +1,12 @@
+# 環境変数（絶対にGitHubに上げちゃダメ！）
+.env
+
+# Macのゴミファイル
+.DS_Store
+
+# Dockerの重いやつ
+*.tar
+*.tar.zip
+
+# MySQLデータ
+mysql_data/
