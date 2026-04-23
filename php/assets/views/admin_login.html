@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ログイン - TaskManager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/admin_login.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            TaskManager
+            <span class="admin-badge">ADMIN</span>
+        </div>
+        <div class="card">
+            <div class="warning-bar">
+                <span class="warning-icon">⚠</span>
+                この画面は管理者専用です
+            </div>
+            <h1>管理者ログイン</h1>
+            <p class="subtitle">管理者アカウントでログインしてください</p>
+
+            <?php if ($error): ?>
+            <div class="error">
+                <?= htmlspecialchars($error) ?>
+            </div>
+            <?php endif; ?>
+
+            <form method="POST" action="/admin_login.php">
+                <div class="field">
+                    <label for="username">ユーザー名</label>
+                    <input type="text" id="username" name="username" placeholder="admin"
+                        value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" autocomplete="username">
+                </div>
+                <div class="field">
+                    <label for="password">パスワード</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••"
+                        autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn-login">管理画面へ</button>
+            </form>
+
+            <div class="divider">一般ユーザーの方</div>
+            <a href="/login.php" class="btn-back">← 通常ログインへ</a>
+        </div>
+    </div>
+</body>
+
+</html>

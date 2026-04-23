@@ -96,12 +96,8 @@ func handleGoogleCallback(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "DBエラー", http.StatusInternalServerError)
 		return
 	}
-	userSession, _ := sessionStore.Get(r, "user-session")
-	userSession.Values["user_id"] = userID
-	userSession.Values["email"] = googleUser.Email
-	userSession.Values["auth_type"] = "google"
-	userSession.Save(r, w)
-	http.Redirect(w, r, "/app/tasks.php", http.StatusSeeOther)
+	redirectURL := fmt.Sprintf("/auth/complete?user_id=%d&email=%s", userID, googleUser.Email)
+	http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 }
 
 func handleLogout(w http.ResponseWriter, r *http.Request) {

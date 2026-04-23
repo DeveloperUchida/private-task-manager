@@ -1,0 +1,151 @@
+header {
+    background: #fff;
+    border-bottom: 1px solid #ebebeb;
+    padding: 0 32px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: #999;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-badge {
+    font-size: 10px;
+    background: #111;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.1em;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-back,
+.btn-logout {
+    font-size: 12px;
+    color: #999;
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    transition: all 0.15s;
+}
+
+.btn-back:hover,
+.btn-logout:hover {
+    border-color: #bbb;
+    color: #333;
+}
+
+.main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+.page-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #111;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+
+.table-wrap {
+    background: #fff;
+    border: 1px solid #ebebeb;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+}
+
+th {
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    padding: 12px 16px;
+    text-align: left;
+}
+
+td {
+    font-size: 14px;
+    color: #333;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: #fafafa;
+}
+
+.mono {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: #999;
+}
+
+.badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.badge.admin {
+    background: #111;
+    color: #fff;
+}
+
+.badge.user {
+    background: #f0f0ee;
+    color: #666;
+}
+
+.btn-delete {
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid #fecaca;
+    background: #fff;
+    color: #dc2626;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.btn-delete:hover {
+    background: #fff5f5;
+}
+
+.protected {
+    font-size: 12px;
+    color: #ccc;
+}

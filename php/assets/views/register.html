@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規登録 - TaskManager</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">TaskManager</div>
+        <div class="card">
+            <h1>新規登録</h1>
+            <p class="subtitle">アカウントを作成してください</p>
+
+            <?php if ($error): ?>
+            <div class="error">
+                <?= htmlspecialchars($error) ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($success): ?>
+            <div class="success">
+                <?= htmlspecialchars($success) ?>
+            </div>
+            <?php endif; ?>
+
+            <form method="POST" action="/register.php">
+                <div class="field">
+                    <label for="username">ユーザー名</label>
+                    <input type="text" id="username" name="username" placeholder="username"
+                        value="<?= htmlspecialchars($_POST['username'] ?? '') ?>">
+                </div>
+                <div class="field">
+                    <label for="password">パスワード（8文字以上）</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••">
+                </div>
+                <div class="field">
+                    <label for="password_confirm">パスワード確認</label>
+                    <input type="password" id="password_confirm" name="password_confirm" placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-login">登録する</button>
+            </form>
+
+            <div class="divider">すでにアカウントをお持ちの方</div>
+            <a href="/login.php" class="btn-google">ログインはこちら</a>
+        </div>
+    </div>
+</body>
+
+</html>

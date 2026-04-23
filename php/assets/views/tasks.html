@@ -102,3 +102,59 @@
                             <button class="btn-status">Todoへ戻す</button>
                         </form>
                         <form method="POST" action="/tasks.php" style="display:inline">
+                            <input type="hidden" name="action" value="update_status">
+                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+                            <input type="hidden" name="status" value="done">
+                            <button class="btn-status">完了へ</button>
+                        </form>
+                        <form method="POST" action="/tasks.php" style="display:inline">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+                            <button class="btn-delete">削除</button>
+                        </form>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="column col-done">
+                <div class="column-header">
+                    <span class="column-title">完了</span>
+                    <span class="column-count">
+                        <?= count($done) ?>
+                    </span>
+                </div>
+                <?php if (empty($done)): ?>
+                <div class="empty">タスクなし</div>
+                <?php endif; ?>
+                <?php foreach ($done as $task): ?>
+                <div class="task-card">
+                    <div class="task-title">
+                        <?= htmlspecialchars($task['title']) ?>
+                    </div>
+                    <?php if ($task['description']): ?>
+                    <div class="task-desc">
+                        <?= htmlspecialchars($task['description']) ?>
+                    </div>
+                    <?php endif; ?>
+                    <div class="task-actions">
+                        <form method="POST" action="/tasks.php" style="display:inline">
+                            <input type="hidden" name="action" value="update_status">
+                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+                            <input type="hidden" name="status" value="in_progress">
+                            <button class="btn-status">進行中へ戻す</button>
+                        </form>
+                        <form method="POST" action="/tasks.php" style="display:inline">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+                            <button class="btn-delete">削除</button>
+                        </form>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
